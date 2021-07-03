@@ -9,15 +9,29 @@ import 'dart:io';
 6. When a line of same the same marks is formed, end the game
 */
 
-void reprint(){
-	print('''
-		.	.	.
+void matrix(){
+	Map <String, String> matrix = {
+		'0,0': '.', '0,1': '.','0,2': '.',
+		'1,0': '.','1,1': '.', '1,2': '.',
+		'2,0': '.', '2,1': '.', '2,2': '.'};
 
-		.	.	.
+	int run = 0;
+	int points = 0;
 
-		.	.	.''');
+	for (run = 1; run <=10; run++){
+		print('Enter coordinates x,y: ');
+		points = stdin.readLineSync();
+		matrix[points] = "X";
+		print('''
+			${matrix['2,0']}	${matrix['2,1']}	${matrix['2,2']}
+
+			${matrix['1,0']}	${matrix['1,1']}	${matrix['1,2']}
+
+			${matrix['0,0']}	${matrix['0,1']}	${matrix['0,2']}''');
+	}
+
 }
 
 void main(){
-	reprint();
+	matrix();
 }
