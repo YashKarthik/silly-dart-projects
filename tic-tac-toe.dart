@@ -10,18 +10,18 @@ import 'dart:io';
 */
 
 void matrix(){
-	Map <String, String> matrix = {
-		'0,0': '.', '0,1': '.','0,2': '.',
-		'1,0': '.','1,1': '.', '1,2': '.',
+	Map <String?, String?> matrix = {
+		'0,0': '.', '0,1': '.', '0,2': '.',
+		'1,0': '.', '1,1': '.', '1,2': '.',
 		'2,0': '.', '2,1': '.', '2,2': '.'};
 
 	int run = 0;
-	int points = 0;
+	var points;
 
-	for (run = 1; run <=10; run++){
-		print('Enter coordinates x,y: ');
+	for (run = 0; run <=9; run++){
+		stdout.write('Enter coordinates x,y: ');
 		points = stdin.readLineSync();
-		matrix[points] = "X";
+		matrix[points] = 'X';
 		print('''
 			${matrix['2,0']}	${matrix['2,1']}	${matrix['2,2']}
 
