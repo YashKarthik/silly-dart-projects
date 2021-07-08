@@ -5,7 +5,18 @@ void main() {
 		home: NinjaCard()));
 }
 
-class NinjaCard extends StatelessWidget {
+/* This is the widget itself which creates a state object(_TestState).
+	 This state object has some data associated with it and return the widget itself.
+*/
+class NinjaCard extends StatefulWidget {
+	@override
+	_NinjaCardState createState() => _NinjaCardState();
+}
+
+class _NinjaCardState extends State<NinjaCard> {
+
+	int ninjaLevel = 0;
+
 	@override
 	Widget build(BuildContext context){
 		return Scaffold(
@@ -16,6 +27,21 @@ class NinjaCard extends StatelessWidget {
 				backgroundColor: Colors.grey[850],
 				elevation: 0,
 			),
+
+			floatingActionButton: FloatingActionButton(
+				onPressed: () => {
+				setState(() {
+					ninjaLevel += 1;
+					/*
+					when updating value inside a statful widget, use setState(() {}) function.
+					Just using ninjaLevel += 1 without the setState function is not gonna 
+					rebuild the widget to account for the changed state
+					*/
+						})
+				},
+				child: Icon(Icons.add),
+				backgroundColor: Colors.grey[800],
+				),
 
 			body: Padding(
 				padding: EdgeInsets.fromLTRB(20, 40, 20, 0),
@@ -68,7 +94,7 @@ class NinjaCard extends StatelessWidget {
 					SizedBox(height: 10,),
 
 					Text(
-						'8',
+						'$ninjaLevel',
 						style: TextStyle(
 							color: Colors.amberAccent,
 							fontSize: 26,
