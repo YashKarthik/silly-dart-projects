@@ -7,17 +7,17 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
 
-	Map? data = {};
+	late Map? data = {};
 
 	@override
 	Widget build (BuildContext context) {
 
-		final data = ModalRoute.of(context)!.settings.arguments as Map;
+		data = data!.isNotEmpty ? data : ModalRoute.of(context)!.settings.arguments as Map;
 		print(data);
 
 		// set background 
-		String bgImage = data['isDaytime'] ? 'day.png' : 'night.png' ; 
-		Color? bgColor = data['isDaytime'] ? Colors.blue : Colors.indigo[800] ; 
+		String bgImage = data?['isDaytime'] ? 'day.png' : 'night.png'; 
+		Color? bgColor = data?['isDaytime'] ? Colors.blue : Colors.indigo[800];
 
 		return Scaffold(
 			backgroundColor: bgColor,
@@ -35,8 +35,16 @@ class _HomeState extends State<Home> {
 						child: Column(
 							children: <Widget>[
 								TextButton.icon(
-									onPressed: () {
-										Navigator.pushNamed(context, '/location');
+									onPressed: () async {
+										dynamic result = await Navigator.pushNamed(context, '/location');
+										setState(() {
+											data = {
+												'time': result['time'],
+												'location': result['location'],
+												'flag': result['flag'],
+												'isDaytime': result['isDaytime'],
+											};
+										});
 									},
 									icon: Icon(
 										Icons.edit_location,
@@ -55,7 +63,7 @@ class _HomeState extends State<Home> {
 								Row(
 								mainAxisAlignment: MainAxisAlignment.center,
 									children: <Widget>[
-										Text(data['location'],
+										Text(data?['location'],
 											style: TextStyle(
 												fontSize: 28,
 												letterSpacing: 2,
@@ -65,7 +73,7 @@ class _HomeState extends State<Home> {
 								),
 								SizedBox(height: 20,),
 								Text(
-									data['time'],
+									data?['time'],
 									style: TextStyle(
 										fontSize: 60,
 									),
@@ -73,7 +81,7 @@ class _HomeState extends State<Home> {
 							],
 						),
 					)
-					),
+				),
 			),
 		);
 	}

@@ -21,10 +21,11 @@ class WorldTime {
 
 			//get utc_datetime and utc_offset from data
 			String datetime = data['utc_datetime'];
-			String offset = data['utc_offset'].substring(0,3);
+			String offset_hrs = data['utc_offset'].substring(0,3);
+			String offset_min = data['utc_offset'].substring(4,6);
 			//create datetime object
 			DateTime now = DateTime.parse(datetime);
-			now = now.add(Duration(hours: int.parse(offset)));
+			now = now.add(Duration(hours: int.parse(offset_hrs), minutes: int.parse(offset_min)));
 	
 			//set the time property of class
 			isDaytime = now.hour > 6 && now.hour < 20;
