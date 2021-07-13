@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-// TODO: create custom widget for the buttons and text combined
 
 void main() => runApp(MaterialApp(home:MyApp()));
 
@@ -72,62 +71,9 @@ class MyApp extends StatelessWidget {
 						Row(
 							mainAxisAlignment: MainAxisAlignment.spaceEvenly,
 							children: <Widget>[
-							TextButton(
-								onPressed: () {},
-								child: Column(
-									children: <Widget>[
-										Icon(
-											Icons.call,
-											color: Colors.lightBlue,
-										),
-										SizedBox(height: 10,),
-										Text(
-											'CALL',
-											style: TextStyle(
-												color: Colors.lightBlue,
-											),
-										)
-									],
-								),
-							),
-
-							TextButton(
-								onPressed: () {},
-								child: Column(
-									children: <Widget>[
-										Icon(
-											Icons.near_me,
-											color: Colors.lightBlue,
-										),
-										SizedBox(height: 10,),
-										Text(
-											'ROUTE',
-											style: TextStyle(
-												color: Colors.lightBlue,
-											),
-										)
-									],
-								),
-							),
-
-							TextButton(
-								onPressed: () {},
-								child: Column(
-									children: <Widget>[
-										Icon(
-											Icons.share,
-											color: Colors.lightBlue,
-										),
-										SizedBox(height: 10,),
-										Text(
-											'SHARE',
-											style: TextStyle(
-												color: Colors.lightBlue,
-											),
-										)
-									],
-								),
-							),
+								_ButtonBuilder('CALL', Icons.call),
+								_ButtonBuilder('ROUTE', Icons.near_me),
+								_ButtonBuilder('SHARE', Icons.share),
 							],
 						),
 						SizedBox(height: 10),
@@ -138,11 +84,46 @@ class MyApp extends StatelessWidget {
 
 					Container(
 						child: Text(
-							"Lake Oeschinen lies at the foot of the Blüemlisalp in the Bernese Alps. Situated 1,578 meters above sea level, it is one of the larger Alpine Lakes. A gondola ride from Kandersteg, followed by a half-hour walk through pastures and pine forest, leads you to the lake, which warms to 20 degrees Celsius in the summer. Activities enjoyed here include rowing, and riding the summer toboggan run.,"	
+							'Lake Oeschinen lies at the foot of the Blüemlisalp in the Bernese '
+            	'Alps. Situated 1,578 meters above sea level, it is one of the '
+            	'larger Alpine Lakes. A gondola ride from Kandersteg, followed by a '
+            	'half-hour walk through pastures and pine forest, leads you to the '
+            	'lake, which warms to 20 degrees Celsius in the summer. Activities '
+            	'enjoyed here include rowing, and riding the summer toboggan run.',
+						softWrap: true,
 						),
-
 						padding: EdgeInsets.symmetric(vertical: 5, horizontal: 25),
 					),
+				],
+			),
+		);
+	}
+}
+
+class _ButtonBuilder extends StatelessWidget {
+
+	late final String text;
+	late final IconData icon;
+
+	_ButtonBuilder(this.text, this.icon);
+
+	@override
+	Widget build(BuildContext context) {
+		return TextButton(
+			onPressed: () {},
+			child: Column(
+				children: <Widget>[
+					Icon(
+						icon,
+						color: Colors.lightBlue,
+					),
+					SizedBox(height: 10,),
+					Text(
+						'$text',
+						style: TextStyle(
+							color: Colors.lightBlue,
+						),
+					)
 				],
 			),
 		);
