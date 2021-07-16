@@ -130,21 +130,19 @@ class _FavItems extends State<FavItems> {
 	@override
 	Widget build(BuildContext context) {
 		return TextButton(
+
 			onPressed: () {
+				setState(() {
+						if (numFav == 41){
+							numFav = 40;
+							icon = Icons.star_border;
+						}
 
-				if (numFav == 41) {
-					setState(() {
-						numFav = 40;
-						icon = Icons.star_border;
-					});
-				}
-
-				else {
-					setState(() {
-						numFav = 41;
-						icon = Icons.star;
-					});
-				}
+						else {
+							numFav = 41;
+							icon = Icons.star;
+						}
+				});
 			},
 
 			child: Row(
