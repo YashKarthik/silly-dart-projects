@@ -47,20 +47,7 @@ class MyApp extends StatelessWidget {
 								],
 							),
 							SizedBox(width: 80),
-							Row(
-								children: <Widget>[
-									Icon(
-										Icons.star,
-										color: Colors.orange
-									),
-									Text(
-										'41',
-										style: TextStyle(
-											color: Colors.grey[950],
-										),
-									),
-								],
-							),
+							FavItems(),
 						],
 					),
 
@@ -124,6 +111,54 @@ class _ButtonBuilder extends StatelessWidget {
 							color: Colors.lightBlue,
 						),
 					)
+				],
+			),
+		);
+	}
+}
+
+class FavItems extends StatefulWidget {
+	@override
+	_FavItems createState() => _FavItems();
+}
+
+class _FavItems extends State<FavItems> {
+
+	int numFav = 41;
+	IconData icon = Icons.star;
+
+	@override
+	Widget build(BuildContext context) {
+		return TextButton(
+			onPressed: () {
+
+				if (numFav == 41) {
+					setState(() {
+						numFav = 40;
+						icon = Icons.star_border;
+					});
+				}
+
+				else {
+					setState(() {
+						numFav = 41;
+						icon = Icons.star;
+					});
+				}
+			},
+
+			child: Row(
+				children: <Widget>[
+					Icon(
+						icon,
+						color: Colors.orange,
+					),
+					Text(
+						'$numFav',
+						style: TextStyle(
+							color: Colors.black54,
+						),
+					),
 				],
 			),
 		);
