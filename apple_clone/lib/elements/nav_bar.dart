@@ -22,7 +22,7 @@ class NavBar extends StatelessWidget implements ObstructingPreferredSizeWidget{
 				child:Row(
 					mainAxisAlignment: MainAxisAlignment.spaceEvenly,
 					children: <Widget>[
-						_TitleBuilder(''),
+						_TitleBuilder('Apple'),
 						_TitleBuilder('Mac'),
 						_TitleBuilder('iPad'),
 						_TitleBuilder('iPhone'),

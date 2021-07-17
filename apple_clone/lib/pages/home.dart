@@ -8,9 +8,9 @@ class Home extends StatelessWidget {
 		return CupertinoPageScaffold(
 			navigationBar: NavBar(),
 			backgroundColor: CupertinoColors.systemGrey.withOpacity(0.02),
-			child: Column(
+			child: ListView(
 				children: <Widget>[
-					SizedBox(height: 80),
+					SizedBox(height: 50),
 
 					ProductWidget1(
 						productName: 'iPhone 12',
@@ -21,14 +21,14 @@ class Home extends StatelessWidget {
 						backColor: 0xffffffff,
 					),
 
-					//ProductWidget1(
-					//	productName: 'iPhone 12 Pro',
-					//	tagLine: 'It\'s a leap year.',
-					//	offerText: 'Buy directly from Apple with special carrier offers',
-					//	productPath: 'iphone12pro.png',
-					//	textColor: 0xffffffff,
-					//	backColor: 0xff000000,
-					//),
+					ProductWidget1(
+						productName: 'iPhone 12 Pro',
+						tagLine: 'It\'s a leap year.',
+						offerText: 'Buy directly from Apple with special carrier offers',
+						productPath: 'iphone12pro.png',
+						textColor: 0xffffffff,
+						backColor: 0xff000000,
+					),
 				],
 			),
 		);
@@ -57,47 +57,48 @@ class ProductWidget1 extends StatelessWidget {
 			child: CupertinoButton(
 				onPressed: () {},
 				pressedOpacity: 1,
-				child: Column(
-					children: <Widget>[
+				child: Container(
+					color: Color(backColor),
+					padding: EdgeInsets.only(top: 100),
+					child: Column(
+						children: <Widget>[
 
-						Text(
-							productName,
-							style: TextStyle(
-								fontSize: 50,
-								color: Color(textColor),
-								fontWeight: FontWeight.w900,
-								letterSpacing: 1,
+							Text(
+								productName,
+								style: TextStyle(
+									fontSize: 50,
+									color: Color(textColor),
+									fontWeight: FontWeight.w900,
+									letterSpacing: 1,
+								),
 							),
-						),
 
-						SizedBox(height: 1),
+							SizedBox(height: 1),
 
-						Text(
-							tagLine,
-							style: TextStyle(
-								color: Color(textColor),
-								fontSize: 25,
-								letterSpacing: 0.3,
-								fontWeight: FontWeight.w500,
+							Text(
+								tagLine,
+								style: TextStyle(
+									color: Color(textColor),
+									fontSize: 25,
+									letterSpacing: 0.3,
+									fontWeight: FontWeight.w500,
+								),
 							),
-						),
 
-						SizedBox(height: 12.5),
+							SizedBox(height: 12.5),
 
-						Text(
-							offerText,
-							style: TextStyle(
-								fontSize: 15,
-								color: CupertinoColors.inactiveGray,
+							Text(
+								offerText,
+								style: TextStyle(
+									fontSize: 15,
+									color: CupertinoColors.inactiveGray,
+								),
 							),
-						),
 
-						SizedBox(height: 12.5),
-
-						Image(
-							image: AssetImage('assets/$productPath'),
-						),
-					],
+							SizedBox(height: 12.5),
+							Image.asset('assets/$productPath')
+						],
+					),
 				),
 			),
 		);
