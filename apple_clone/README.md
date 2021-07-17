@@ -9,4 +9,9 @@ practice flutter.
 I am in no way affiliated in any way with the company "Apple Inc." nor any of its affiliates in any
 way, just using their website as a reference because it looks good.
 
-[Screen recording](https://www.github.com/yashkarthik/silly-darty-projects/apple_clone/assets/screen-rec.move)
+## Images:
+
+[screanshot](assets/ss1)
+[screanshot](assets/ss2)
+[screanshot](assets/ss3)
+[screanshot](assets/ss4)
