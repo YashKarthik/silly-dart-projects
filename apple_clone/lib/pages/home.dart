@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:apple_clone/elements/product_widget1.dart';
 import 'package:apple_clone/elements/nav_bar.dart';
 
 class Home extends StatelessWidget {
@@ -16,7 +17,7 @@ class Home extends StatelessWidget {
 						productName: 'iPhone 12',
 						tagLine: 'Blast past fast.',
 						offerText: 'Buy directly from Apple with special carrier offers',
-						productPath: 'iphone12.png',
+						productPath: 'iPhone12.png',
 						textColor: 0xff000000,
 						backColor: 0xffffffff,
 					),
@@ -25,81 +26,62 @@ class Home extends StatelessWidget {
 						productName: 'iPhone 12 Pro',
 						tagLine: 'It\'s a leap year.',
 						offerText: 'Buy directly from Apple with special carrier offers',
-						productPath: 'iphone12pro.png',
+						productPath: 'iPhone12Pro.png',
 						textColor: 0xffffffff,
 						backColor: 0xff000000,
 					),
-				],
-			),
-		);
-	}
-}
 
-class ProductWidget1 extends StatelessWidget {
+					ProductWidget1(
+						productName: 'iPad Pro',
+						tagLine: 'Supercharged by the Apple M1 chip.',
+						offerText: 'Buy directly from Apple with special carrier offers',
+						productPath: 'iPadPro.png',
+						textColor: 0xffffffff,
+						backColor: 0xff000000,
+					),
 
-	late final String productName;
-	late final String tagLine;
-	late final String offerText;
-	late final String productPath;
-	late final int textColor;
-	late final int backColor;
-
-	ProductWidget1(
-	{
-		required this.productName, required this.tagLine,
-		required this.offerText, required this.productPath,
-		required this.textColor, required this.backColor,
-	});
-
-	@override
-	Widget build(BuildContext context) {
-		return Center( 
-			child: CupertinoButton(
-				onPressed: () {},
-				pressedOpacity: 1,
-				child: Container(
-					color: Color(backColor),
-					padding: EdgeInsets.only(top: 100),
-					child: Column(
+					GridView.count(
+						crossAxisCount: 2,
+						crossAxisSpacing: 10,
+						mainAxisSpacing: 10,
+						scrollDirection: Axis.vertical,
+						shrinkWrap: true,
 						children: <Widget>[
-
-							Text(
-								productName,
-								style: TextStyle(
-									fontSize: 50,
-									color: Color(textColor),
-									fontWeight: FontWeight.w900,
-									letterSpacing: 1,
-								),
+							
+							ProductWidget1(
+								productName: 'iMac',
+								tagLine: 'Say hello.',
+								offerText: 'Buy directly from Apple with special carrier offers',
+								productPath: 'iMac.png',
+								textColor: 0xff000000,
+								backColor: 0xffffffff,
 							),
 
-							SizedBox(height: 1),
-
-							Text(
-								tagLine,
-								style: TextStyle(
-									color: Color(textColor),
-									fontSize: 25,
-									letterSpacing: 0.3,
-									fontWeight: FontWeight.w500,
-								),
+							ProductWidget1(
+								productName: 'Watch',
+								tagLine: 'The future of health is on your wrist.',
+								offerText: 'Buy directly from Apple with special carrier offers',
+								productPath: 'Watch.png',
+								textColor: 0xffffffff,
+								backColor: 0xff000000,
 							),
-
-							SizedBox(height: 12.5),
-
-							Text(
-								offerText,
-								style: TextStyle(
-									fontSize: 15,
-									color: CupertinoColors.inactiveGray,
-								),
-							),
-
-							SizedBox(height: 12.5),
-							Image.asset('assets/$productPath')
 						],
 					),
-				),
+
+					Container(
+						padding: EdgeInsets.only(top: 100, bottom: 20),
+						alignment: Alignment.center,
+						child: Text(
+						'I am in no way affiliated in any way with the company "Apple Inc.", nor any of its affiliates in any way. Just using their website as a reference because it looks good.',
+							style: TextStyle(
+								fontWeight: FontWeight.w200,
+								fontSize: 15,
+								color: CupertinoColors.systemGrey,
+								
+							),
+						),
+					),
+				],
 			),
 		);
 	}
