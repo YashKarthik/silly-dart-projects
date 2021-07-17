@@ -11,7 +11,7 @@ way, just using their website as a reference because it looks good.
 
 ## Images:
 
-[screanshot](assets/ss1)
-[screanshot](assets/ss2)
-[screanshot](assets/ss3)
-[screanshot](assets/ss4)
+![screanshot](https://github.com/YashKarthik/silly-dart-projects/blob/master/apple_clone/assets/ss1.png)
+![screanshot](https://github.com/YashKarthik/silly-dart-projects/blob/master/apple_clone/assets/ss2.png)
+![screanshot](https://github.com/YashKarthik/silly-dart-projects/blob/master/apple_clone/assets/ss3.png)
+![screanshot](https://github.com/YashKarthik/silly-dart-projects/blob/master/apple_clone/assets/ss4.png)
