@@ -166,12 +166,14 @@ class _ButtonBuilder extends StatelessWidget {
 				onPressed: () {
 
 					if(opName == '=' || op == '='){
+
 						print(globals.operation);
 						var context = {'x':1};
 						var expression = Expression.parse("${globals.operation}");
 						final evaluator = const ExpressionEvaluator();
 						globals.solution = evaluator.eval(expression, context);
 						print(globals.solution);
+
 					}
 					else{
 						globals.operation += op ?? opName;
