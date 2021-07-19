@@ -19,123 +19,123 @@ class DefaultButtons extends StatelessWidget {
 
 			children: <Widget>[
 
-				ButtonBuilder(
+				_ButtonBuilder(
 					opName: 'AC',
 					backColor: 0xffccc7c1,
 					textColor: 0xff000000,
 				),
 
-				ButtonBuilder(
+				_ButtonBuilder(
 					opName: '+/-',
 					backColor: 0xffccc7c1,
 					textColor: 0xff000000,
 				),
 
-				ButtonBuilder(
+				_ButtonBuilder(
 					opName: '%',
 					backColor: 0xffccc7c1,
 					textColor: 0xff000000,
 					op: '*(1/100)*'
 				),
 
-				ButtonBuilder(
+				_ButtonBuilder(
 					opName: '÷',
 					backColor: 0xfffc9825,
 					textColor: 0xffffffff,
 					op: '/',
 				),
 				
-				ButtonBuilder(
+				_ButtonBuilder(
 					opName: '7',
 					backColor: 0xff1f2120,
 					textColor: 0xffffffff,
 				),
 
-				ButtonBuilder(
+				_ButtonBuilder(
 					opName: '8',
 					backColor: 0xff1f2120,
 					textColor: 0xffffffff,
 				),
 
-				ButtonBuilder(
+				_ButtonBuilder(
 					opName: '9',
 					backColor: 0xff1f2120,
 					textColor: 0xffffffff,
 				),
 
-				ButtonBuilder(
+				_ButtonBuilder(
 					opName: '*',
 					backColor: 0xfffc9825,
 					textColor: 0xffffffff,
 				),
 
-				ButtonBuilder(
+				_ButtonBuilder(
 					opName: '4',
 					backColor: 0xff1f2120,
 					textColor: 0xffffffff,
 				),
 
-				ButtonBuilder(
+				_ButtonBuilder(
 					opName: '5',
 					backColor: 0xff1f2120,
 					textColor: 0xffffffff,
 				),
 
-				ButtonBuilder(
+				_ButtonBuilder(
 					opName: '6',
 					backColor: 0xff1f2120,
 					textColor: 0xffffffff,
 				),
 
-				ButtonBuilder(
+				_ButtonBuilder(
 					opName: '-',
 					backColor: 0xfffc9825,
 					textColor: 0xffffffff,
 				),
 
-				ButtonBuilder(
+				_ButtonBuilder(
 					opName: '1',
 					backColor: 0xff1f2120,
 					textColor: 0xffffffff,
 				),
 
-				ButtonBuilder(
+				_ButtonBuilder(
 					opName: '2',
 					backColor: 0xff1f2120,
 					textColor: 0xffffffff,
 				),
 
-				ButtonBuilder(
+				_ButtonBuilder(
 					opName: '3',
 					backColor: 0xff1f2120,
 					textColor: 0xffffffff,
 				),
 
-				ButtonBuilder(
+				_ButtonBuilder(
 					opName: '+',
 					backColor: 0xfffc9825,
 					textColor: 0xffffffff,
 				),
 
-				ButtonBuilder(
+				_ButtonBuilder(
 					opName: '0',
 					backColor: 0xff1f2120,
 					textColor: 0xffffffff,
 				),
 
-				ButtonBuilder(
+				_ButtonBuilder(
 					opName: '00',
 					backColor: 0xff1f2120,
 					textColor: 0xffffffff,
 				),
 
-				ButtonBuilder(
+				_ButtonBuilder(
 					opName: '.',
 					backColor: 0xff1f2120,
 					textColor: 0xffffffff,
 				),
 
-				ButtonBuilder(
+				_ButtonBuilder(
 					opName: '=',
 					backColor: 0xfffc9825,
 					textColor: 0xffffffff,
@@ -145,14 +145,14 @@ class DefaultButtons extends StatelessWidget {
 	}
 }
 
-class ButtonBuilder extends StatelessWidget {
+class _ButtonBuilder extends StatelessWidget {
 	
 	late final String opName;
 	late final String? op;
 	late final int backColor;
 	late final int textColor;
 
-	ButtonBuilder({
+	_ButtonBuilder({
 			required this.opName,
 			required this.backColor,
 			required this.textColor,
@@ -165,20 +165,18 @@ class ButtonBuilder extends StatelessWidget {
 
 				onPressed: () {
 
-					setState(() {
-
-						if (opName == '=' || op == '=') {
-
-							var context = {'x':1};
-							var expression = Expression.parse("globals.operation");
-							final evaluator = const ExpressionEvaluator();
-							globals.solution = evaluator.eval(expression, context);
-
-						} else {
-							globals.operation += op ?? opName
-						}
-
-					});
+					if(opName == '=' || op == '='){
+						print(globals.operation);
+						var context = {'x':1};
+						var expression = Expression.parse("${globals.operation}");
+						final evaluator = const ExpressionEvaluator();
+						globals.solution = evaluator.eval(expression, context);
+						print(globals.solution);
+					}
+					else{
+						globals.operation += op ?? opName;
+						print(globals.operation);
+					}
 				},
 
 				style: ElevatedButton.styleFrom(
