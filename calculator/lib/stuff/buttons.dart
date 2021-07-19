@@ -1,5 +1,8 @@
 import 'dart:ui';
+import 'package:expressions/expressions.dart';
 import 'package:flutter/material.dart';
+import 'package:calculator/stuff/globals.dart' as globals;
+
 
 class DefaultButtons extends StatelessWidget {
 	@override
@@ -16,121 +19,123 @@ class DefaultButtons extends StatelessWidget {
 
 			children: <Widget>[
 
-				_ButtonBuilder(
+				ButtonBuilder(
 					opName: 'AC',
 					backColor: 0xffccc7c1,
 					textColor: 0xff000000,
 				),
 
-				_ButtonBuilder(
+				ButtonBuilder(
 					opName: '+/-',
 					backColor: 0xffccc7c1,
 					textColor: 0xff000000,
 				),
 
-				_ButtonBuilder(
+				ButtonBuilder(
 					opName: '%',
 					backColor: 0xffccc7c1,
 					textColor: 0xff000000,
+					op: '*(1/100)*'
 				),
 
-				_ButtonBuilder(
+				ButtonBuilder(
 					opName: '÷',
 					backColor: 0xfffc9825,
 					textColor: 0xffffffff,
+					op: '/',
 				),
 				
-				_ButtonBuilder(
+				ButtonBuilder(
 					opName: '7',
 					backColor: 0xff1f2120,
 					textColor: 0xffffffff,
 				),
 
-				_ButtonBuilder(
+				ButtonBuilder(
 					opName: '8',
 					backColor: 0xff1f2120,
 					textColor: 0xffffffff,
 				),
 
-				_ButtonBuilder(
+				ButtonBuilder(
 					opName: '9',
 					backColor: 0xff1f2120,
 					textColor: 0xffffffff,
 				),
 
-				_ButtonBuilder(
-					opName: 'x',
+				ButtonBuilder(
+					opName: '*',
 					backColor: 0xfffc9825,
 					textColor: 0xffffffff,
 				),
 
-				_ButtonBuilder(
+				ButtonBuilder(
 					opName: '4',
 					backColor: 0xff1f2120,
 					textColor: 0xffffffff,
 				),
 
-				_ButtonBuilder(
+				ButtonBuilder(
 					opName: '5',
 					backColor: 0xff1f2120,
 					textColor: 0xffffffff,
 				),
 
-				_ButtonBuilder(
+				ButtonBuilder(
 					opName: '6',
 					backColor: 0xff1f2120,
 					textColor: 0xffffffff,
 				),
 
-				_ButtonBuilder(
+				ButtonBuilder(
 					opName: '-',
 					backColor: 0xfffc9825,
 					textColor: 0xffffffff,
 				),
 
-				_ButtonBuilder(
+				ButtonBuilder(
 					opName: '1',
 					backColor: 0xff1f2120,
 					textColor: 0xffffffff,
 				),
 
-				_ButtonBuilder(
+				ButtonBuilder(
 					opName: '2',
 					backColor: 0xff1f2120,
 					textColor: 0xffffffff,
 				),
 
-				_ButtonBuilder(
+				ButtonBuilder(
 					opName: '3',
 					backColor: 0xff1f2120,
 					textColor: 0xffffffff,
 				),
 
-				_ButtonBuilder(
-					opName: 's',
+				ButtonBuilder(
+					opName: '+',
 					backColor: 0xfffc9825,
 					textColor: 0xffffffff,
 				),
 
-				_ButtonBuilder(
+				ButtonBuilder(
 					opName: '0',
 					backColor: 0xff1f2120,
 					textColor: 0xffffffff,
 				),
 
-				_ButtonBuilder(
+				ButtonBuilder(
 					opName: '00',
 					backColor: 0xff1f2120,
 					textColor: 0xffffffff,
 				),
 
-				_ButtonBuilder(
+				ButtonBuilder(
 					opName: '.',
 					backColor: 0xff1f2120,
 					textColor: 0xffffffff,
 				),
 
-				_ButtonBuilder(
+				ButtonBuilder(
 					opName: '=',
 					backColor: 0xfffc9825,
 					textColor: 0xffffffff,
@@ -140,24 +145,41 @@ class DefaultButtons extends StatelessWidget {
 	}
 }
 
-class _ButtonBuilder extends StatelessWidget {
+class ButtonBuilder extends StatelessWidget {
 	
 	late final String opName;
+	late final String? op;
 	late final int backColor;
 	late final int textColor;
-	final int solution = 0;
 
-	_ButtonBuilder({
+	ButtonBuilder({
 			required this.opName,
 			required this.backColor,
-			required this.textColor
+			required this.textColor,
+			this.op,
 	});
 
 	@override
 	Widget build(BuildContext context) {
 		return ElevatedButton(
 
-				onPressed: () {},
+				onPressed: () {
+
+					setState(() {
+
+						if (opName == '=' || op == '=') {
+
+							var context = {'x':1};
+							var expression = Expression.parse("globals.operation");
+							final evaluator = const ExpressionEvaluator();
+							globals.solution = evaluator.eval(expression, context);
+
+						} else {
+							globals.operation += op ?? opName
+						}
+
+					});
+				},
 
 				style: ElevatedButton.styleFrom(
 				  shape: CircleBorder(),

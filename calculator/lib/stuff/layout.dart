@@ -1,6 +1,7 @@
-import 'package:calculator/stuff/buttons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:calculator/stuff/buttons.dart';
+import 'package:calculator/stuff/globals.dart' as globals;
 
 class MyApp extends StatefulWidget {
 	@override
@@ -31,12 +32,25 @@ class _MyAppState extends State<MyApp> {
 
 					Container(
 						alignment: AlignmentDirectional.topEnd,
+						padding: EdgeInsets.fromLTRB(10,0, 30, 115),
+						child: Text(
+							'${globals.operation}',
+							style: TextStyle(
+								color: Colors.grey,
+								fontSize: 30,
+								fontWeight: FontWeight.w300
+							),
+						),
+					),
+
+					Container(
+						alignment: AlignmentDirectional.topEnd,
 						padding: EdgeInsets.fromLTRB(10,0, 30, 0),
 						child: Text(
-							'Hello world',
+							'${globals.solution}',
 							style: TextStyle(
 								color: Colors.white,
-								fontSize: 40 
+								fontSize: 50 
 							),
 						),
 					),
