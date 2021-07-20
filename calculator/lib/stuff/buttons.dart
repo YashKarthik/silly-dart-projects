@@ -3,7 +3,6 @@ import 'package:expressions/expressions.dart';
 import 'package:flutter/material.dart';
 import 'package:calculator/stuff/globals.dart' as globals;
 
-
 class DefaultButtons extends StatelessWidget {
 	@override
 	Widget build(BuildContext context) {
@@ -15,7 +14,7 @@ class DefaultButtons extends StatelessWidget {
 			crossAxisCount: 4,
 			crossAxisSpacing: 10,
 			mainAxisSpacing: 10,
-			padding: EdgeInsets.fromLTRB(20, 25, 20, 50),
+			padding: EdgeInsets.fromLTRB(10, 20, 10, 30),
 
 			children: <Widget>[
 

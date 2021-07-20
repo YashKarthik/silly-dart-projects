@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/widgets.dart';
 import 'package:calculator/stuff/buttons.dart';
 import 'package:calculator/stuff/globals.dart' as globals;
@@ -56,8 +57,21 @@ class _MyAppState extends State<MyApp> {
 					),
 
 					Container(
-						alignment: AlignmentDirectional.bottomCenter,
-						child: DefaultButtons(),
+						//alignment: AlignmentDirectional.bottomCenter,
+						child: CupertinoButton(
+							child: Column(
+								children : [
+									DefaultButtons(),
+								],
+							),
+							pressedOpacity: 1,
+
+							onPressed: () {
+								setState(() {
+									print('setting state');
+								});
+							},
+						),
 					),
 
 				],
