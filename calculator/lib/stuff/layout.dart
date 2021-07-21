@@ -11,6 +11,12 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
 
+	Function pressedFunction() {
+		setState(() {
+			print('setting state');
+		});
+	}
+
 	@override
 	Widget build(BuildContext context) {
 		
@@ -57,23 +63,8 @@ class _MyAppState extends State<MyApp> {
 					),
 
 					Container(
-						//alignment: AlignmentDirectional.bottomCenter,
-						child: CupertinoButton(
-							child: Column(
-								children : [
-									DefaultButtons(),
-								],
-							),
-							pressedOpacity: 1,
-
-							onPressed: () {
-								setState(() {
-									print('setting state');
-								});
-							},
-						),
+						child: DefaultButtons(pressedFunction()),
 					),
-
 				],
 			),
 		);
