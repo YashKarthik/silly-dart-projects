@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:weather_app/services/get_weather.dart';
 
 
 class ChooseLocation extends StatefulWidget {
@@ -7,6 +8,14 @@ class ChooseLocation extends StatefulWidget {
 }
 
 class _ChooseLocationState extends State<ChooseLocation> {
+
+	void updateWeather() async {
+		CityWeather instance = CityWeather(city: 'London');
+		await instance.getWeather();
+		Navigator.pop(context, {
+				'city': instance.city,
+		});
+	}
 
 	@override
 	Widget build(BuildContext context) {
@@ -26,18 +35,12 @@ class _ChooseLocationState extends State<ChooseLocation> {
 				children: <Widget>[
 					Card(child: Padding(
 						padding: EdgeInsets.all(15),
-						child: Row(
-							mainAxisAlignment: MainAxisAlignment.start,
-							children: <Widget>[
-								Icon(Icons.flag),
-								Text(
-									'City',
-									style: TextStyle(
-										fontSize: 25
-									),
-								)
-							],
-						),),
+						child: ListTile(
+							onTap: () {updateWeather();},
+						title: Text('London'),
+						leading: Icon(Icons.flag),
+						),
+					),
 					),
 				],
 			),

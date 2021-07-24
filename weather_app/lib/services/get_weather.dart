@@ -4,40 +4,37 @@ import 'dart:convert';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class CityWeather {
-	late String location;
+	late String city;
 	late String main;
 	late String temp;
 	late String tempMin;
 	late String tempMax;
+	late String url;
 
-	CityWeather(
-	{
-		required this.location, required this.main,
-		required this.temp, required this.tempMin,
-		required this.tempMax
-	});
+	CityWeather({required this.city});
 
 	Future <void> getWeather() async {
 
-		await dotenv.load(fileName: ".env");
-		String apiKey = (DotEnv().env['API_KEY']!);
-
+			
 		try {
 
+			String apiKey = dotenv.env['API_KEY']!;
 			Response response = await
-				get(Uri.parse('https://api.openweathermap.org/data/2.5/weather?q=London,uk&APPID=$apiKey'));
+				get(Uri.parse('https://api.openweathermap.org/data/2.5/weather?q=$city&APPID=$apiKey'));
 
-			print(Response);
+			Map data = jsonDecode(response.body);
+			String weather = data['weather'][0]['main'];
+			String temp = (data['main']['temp'] - 273).toString() + '℃';
+			String tempMin = (data['main']['temp_min'] - 273).toString() + '℃';
+			String tempMax = (data['main']['temp_max'] - 273).toString() + '℃';
+
+			print('$weather $temp $tempMax $tempMin');
 
 		}
 
 		catch (e) {
 			print('couldn\'t get data');
+			print(e);
 		}
-
-
 	}
-
-
-
 }
