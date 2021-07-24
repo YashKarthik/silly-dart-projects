@@ -10,7 +10,7 @@ class ChooseLocation extends StatefulWidget {
 class _ChooseLocationState extends State<ChooseLocation> {
 
 	void updateWeather() async {
-		CityWeather instance = CityWeather(city: 'London');
+		CityWeather instance = CityWeather(city: 'Miami');
 		await instance.getWeather();
 		Navigator.pop(context, {
 			'city'    : instance.city,
@@ -18,6 +18,7 @@ class _ChooseLocationState extends State<ChooseLocation> {
 			'temp'    : instance.temp,
 			'tempMax' : instance.tempMax,
 			'tempMin' : instance.tempMin,
+			'imgUrl'  : instance.imgUrl,
 		});
 	}
 

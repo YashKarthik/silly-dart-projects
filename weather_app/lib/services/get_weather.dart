@@ -9,7 +9,7 @@ class CityWeather {
 	late String temp;
 	late String tempMin;
 	late String tempMax;
-	late String url;
+	late String imgUrl;
 
 	CityWeather({required this.city});
 
@@ -24,11 +24,12 @@ class CityWeather {
 
 			Map data = jsonDecode(response.body);
 			weather = data['list'][0]['weather'][0]['description'];
+			imgUrl = 'http://openweathermap.org/img/wn/' + data['list'][0]['weather'][0]['icon'] + '.png';
 			temp = (data['list'][0]['main']['temp'] - 273).toStringAsFixed(1) + ' ℃';
 			tempMin = (data['list'][0]['main']['temp_min'] - 273).toStringAsFixed(1) + ' ℃';
 			tempMax = (data['list'][0]['main']['temp_max'] - 273).toStringAsFixed(1) + ' ℃';
 
-			print('$weather $temp $tempMax $tempMin');
+			print('$city $weather $temp $tempMax $tempMin $imgUrl');
 
 		}
 

@@ -7,12 +7,16 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
 
-	late Map? data;
+	late Map? data = {};
 
 	@override
 	Widget build(BuildContext context) {
+
+		data = data!.isNotEmpty ? data : ModalRoute.of(context)!.settings.arguments as Map;
+		print('data:\n $data');
 		
 		return Scaffold(
+			//backgroundColor: Colors.black,
 			appBar: AppBar(
 				title: Padding(
 					padding: EdgeInsets.only(top:10, bottom:20),
@@ -39,26 +43,31 @@ class _HomeState extends State<Home> {
 										'temp'    : result['temp'],
 										'tempMax' : result['tempMax'],
 										'tempMin' : result['tempMin'],
+										'imgUrl' : result['imgUrl'],
 									};
 								});
 							},
 							child: Row(
-								mainAxisAlignment: MainAxisAlignment.end,
+								mainAxisAlignment: MainAxisAlignment.center,
 								children: [
-									Text(
-										data?['city'],
-										style: TextStyle(
-											fontSize: 40,
-											fontWeight: FontWeight.w500,
-											color: Colors.black,
+									Center(
+										child: Text(
+											data?['city'],
+											style: TextStyle(
+												fontSize: 40,
+												fontWeight: FontWeight.w500,
+												color: Colors.black,
+											),
 										),
 									),
 
-									SizedBox(width: 20),
+									//SizedBox(width: 20),
 
 									Padding(
 										padding: EdgeInsets.only(right:30),
-										child: Text(data?['weather']),
+										child: Image.network(
+											data?['imgUrl'],
+										),
 										),
 								],
 							),
