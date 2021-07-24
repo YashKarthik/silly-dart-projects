@@ -7,6 +7,8 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
 
+	late Map? data;
+
 	@override
 	Widget build(BuildContext context) {
 		
@@ -28,26 +30,45 @@ class _HomeState extends State<Home> {
 
 					Center(
 						child: TextButton(
-							onPressed: () {
+							onPressed: () async {
+								dynamic result = await Navigator.pushNamed(context, '/location');
 								setState(() {
-									Navigator.pushNamed(context, '/location');
+									data = {
+										'city'    : result['city'],
+										'weather' : result['weather'],
+										'temp'    : result['temp'],
+										'tempMax' : result['tempMax'],
+										'tempMin' : result['tempMin'],
+									};
 								});
 							},
-							child: Text(
-								'City',
-								style: TextStyle(
-									fontSize: 70,
-									fontWeight: FontWeight.w500,
-									color: Colors.black,
-								),
+							child: Row(
+								mainAxisAlignment: MainAxisAlignment.end,
+								children: [
+									Text(
+										data?['city'],
+										style: TextStyle(
+											fontSize: 40,
+											fontWeight: FontWeight.w500,
+											color: Colors.black,
+										),
+									),
+
+									SizedBox(width: 20),
+
+									Padding(
+										padding: EdgeInsets.only(right:30),
+										child: Text(data?['weather']),
+										),
+								],
 							),
 						),
-						),
+					),
 
 					SizedBox(height: 20),
 
 					Text(
-						'temp',
+						data?['temp'],
 						style: TextStyle( fontSize: 65),
 					),
 
@@ -60,40 +81,22 @@ class _HomeState extends State<Home> {
 								crossAxisAlignment: CrossAxisAlignment.start,
 								children: <Widget>[
 									Text(
-										'Min: 25',
+										'Min: ${data?['tempMin']}',
 										style: TextStyle(
 											fontSize: 23
 										),
 									),
 
 									Text(
-										'Max: 23',
+										'Max: ${data?['tempMax']}',
 										style: TextStyle(
 											fontSize: 23
 										),
 									),
-
-									Text(
-										'Pressure: 23',
-										style: TextStyle(
-											fontSize: 23
-										),
-									),
-
-									Text(
-										'Humidity: 23',
-										style: TextStyle(
-											fontSize: 23
-										),
-									),
-
 								],
 							),
-
-							Text('Cloudy'),
 						],
 					),
-
 				],
 			),
 		);

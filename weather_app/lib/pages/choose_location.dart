@@ -13,7 +13,11 @@ class _ChooseLocationState extends State<ChooseLocation> {
 		CityWeather instance = CityWeather(city: 'London');
 		await instance.getWeather();
 		Navigator.pop(context, {
-				'city': instance.city,
+			'city'    : instance.city,
+			'weather' : instance.weather,
+			'temp'    : instance.temp,
+			'tempMax' : instance.tempMax,
+			'tempMin' : instance.tempMin,
 		});
 	}
 

@@ -5,7 +5,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class CityWeather {
 	late String city;
-	late String main;
+	late String weather;
 	late String temp;
 	late String tempMin;
 	late String tempMax;
@@ -20,13 +20,13 @@ class CityWeather {
 
 			String apiKey = dotenv.env['API_KEY']!;
 			Response response = await
-				get(Uri.parse('https://api.openweathermap.org/data/2.5/weather?q=$city&APPID=$apiKey'));
+				get(Uri.parse('https://api.openweathermap.org/data/2.5/forecast?q=$city&appid=$apiKey'));
 
 			Map data = jsonDecode(response.body);
-			String weather = data['weather'][0]['main'];
-			String temp = (data['main']['temp'] - 273).toString() + '℃';
-			String tempMin = (data['main']['temp_min'] - 273).toString() + '℃';
-			String tempMax = (data['main']['temp_max'] - 273).toString() + '℃';
+			weather = data['list'][0]['weather'][0]['description'];
+			temp = (data['list'][0]['main']['temp'] - 273).toStringAsFixed(1) + ' ℃';
+			tempMin = (data['list'][0]['main']['temp_min'] - 273).toStringAsFixed(1) + ' ℃';
+			tempMax = (data['list'][0]['main']['temp_max'] - 273).toStringAsFixed(1) + ' ℃';
 
 			print('$weather $temp $tempMax $tempMin');
 
