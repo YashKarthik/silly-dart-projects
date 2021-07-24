@@ -10,8 +10,9 @@ class CityWeather {
 	late String tempMin;
 	late String tempMax;
 	late String imgUrl;
+	late int index;
 
-	CityWeather({required this.city});
+	CityWeather({required this.city, required this.index});
 
 	Future <void> getWeather() async {
 
@@ -23,11 +24,11 @@ class CityWeather {
 				get(Uri.parse('https://api.openweathermap.org/data/2.5/forecast?q=$city&appid=$apiKey'));
 
 			Map data = jsonDecode(response.body);
-			weather = data['list'][0]['weather'][0]['description'];
-			imgUrl = 'http://openweathermap.org/img/wn/' + data['list'][0]['weather'][0]['icon'] + '.png';
-			temp = (data['list'][0]['main']['temp'] - 273).toStringAsFixed(1) + ' ℃';
-			tempMin = (data['list'][0]['main']['temp_min'] - 273).toStringAsFixed(1) + ' ℃';
-			tempMax = (data['list'][0]['main']['temp_max'] - 273).toStringAsFixed(1) + ' ℃';
+			weather = data['list'][index]['weather'][0]['description'];
+			imgUrl = 'http://openweathermap.org/img/wn/' + data['list'][index]['weather'][0]['icon'] + '.png';
+			temp = (data['list'][index]['main']['temp'] - 273).toStringAsFixed(1);
+			tempMin = (data['list'][index]['main']['temp_min'] - 273).toStringAsFixed(1);
+			tempMax = (data['list'][index]['main']['temp_max'] - 273).toStringAsFixed(1);
 
 			print('$city $weather $temp $tempMax $tempMin $imgUrl');
 

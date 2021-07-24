@@ -16,94 +16,183 @@ class _HomeState extends State<Home> {
 		print('data:\n $data');
 		
 		return Scaffold(
-			//backgroundColor: Colors.black,
+			backgroundColor: Color.fromRGBO(0,2,46,1),
 			appBar: AppBar(
-				title: Padding(
-					padding: EdgeInsets.only(top:10, bottom:20),
-					child: Text('Weather')
-					),
+
+				backgroundColor: Color.fromRGBO(92,117,181,50),
 				centerTitle: true,
 				toolbarHeight: 40,
+				elevation: 0,
+
+				title: Padding(
+					padding: EdgeInsets.only(top:10, bottom:20),
+					child: Text(
+						'Weather',
+						style: TextStyle(
+							color: Colors.grey[350]
+						),
+					)
+				),
+
 			),
 
-			body: Column(
+			body: SafeArea(
+				child: Container(
+					decoration: BoxDecoration(
+						image: DecorationImage(
+							image: AssetImage('assets/blue.webp'),
+							fit: BoxFit.cover,
+							)
+						),
+					child: Column(
 
-				children: <Widget>[
+						children: <Widget>[
 
-					SizedBox(height: 30),
+							SizedBox(height: 30),
 
-					Center(
-						child: TextButton(
-							onPressed: () async {
-								dynamic result = await Navigator.pushNamed(context, '/location');
-								setState(() {
-									data = {
-										'city'    : result['city'],
-										'weather' : result['weather'],
-										'temp'    : result['temp'],
-										'tempMax' : result['tempMax'],
-										'tempMin' : result['tempMin'],
-										'imgUrl' : result['imgUrl'],
-									};
-								});
-							},
-							child: Row(
-								mainAxisAlignment: MainAxisAlignment.center,
-								children: [
-									Center(
-										child: Text(
-											data?['city'],
-											style: TextStyle(
-												fontSize: 40,
-												fontWeight: FontWeight.w500,
-												color: Colors.black,
+							Center(
+								child: TextButton(
+									onPressed: () async {
+										dynamic result = await Navigator.pushNamed(context, '/location');
+										setState(() {
+											data = {
+												'city'    : result['city'],
+												'weather' : result['weather'],
+												'temp'    : result['temp'],
+												'tempMax' : result['tempMax'],
+												'tempMin' : result['tempMin'],
+												'imgUrl' : result['imgUrl'],
+											};
+										});
+									},
+
+									child:Text(
+										data?['city'],
+										style: TextStyle(
+											fontSize: 40,
+											fontWeight: FontWeight.w500,
+											color: Color.fromRGBO(205,205,211,10)
+										),
+									),
+								),
+							),
+
+							SizedBox(height: 30),
+
+							Container(
+								height: 120,
+								child: Row(
+									mainAxisAlignment: MainAxisAlignment.center,
+									children: <Widget>[
+
+										Padding(
+											padding: EdgeInsets.symmetric(horizontal:10, vertical:00),
+											child: Row(
+												children: [
+													Text(
+														data?['temp'],
+														style: TextStyle(
+															fontSize: 55,
+															color: Color.fromRGBO(205,205,211,50)
+														),
+													),
+
+													SizedBox(width: 10,),
+
+													Text(
+														'℃',
+														style: TextStyle(
+															fontSize: 30,
+															color: Color.fromRGBO(205,205,211,50)
+														),
+													)
+												],
 											),
 										),
-									),
 
-									//SizedBox(width: 20),
+										VerticalDivider(
+											color: Colors.grey,
+											thickness: 1,
+											width: 20,
+											indent: 1,
+											endIndent: 10,
+										),
 
-									Padding(
-										padding: EdgeInsets.only(right:30),
-										child: Image.network(
-											data?['imgUrl'],
+										Column(
+											crossAxisAlignment: CrossAxisAlignment.start,
+											children: <Widget>[
+
+												Image.network(data?['imgUrl']),
+
+												Text(
+													'Min: ${data?['tempMin']}',
+													style: TextStyle(
+														fontSize: 20,
+														color: Color.fromRGBO(205,205,211,50),
+														fontFamily: 'Verdana',
+														fontWeight: FontWeight.w100,
+													),
+												),
+
+												Text(
+													'Max: ${data?['tempMax']}',
+													style: TextStyle(
+														color: Color.fromRGBO(205,205,211,50),
+														fontSize: 20,
+														fontFamily: 'Verdana',
+														fontWeight: FontWeight.w100,
+													),
+												),
+											],
 										),
-										),
-								],
+									],
+								),
 							),
+
+							SizedBox(height: 40),
+							WeekBuilder(),
+
+						],
+					),
+				),
+			),
+		);
+	}
+}
+
+class WeekBuilder extends StatefulWidget {
+	@override
+	_WeekBuilderState createState() => _WeekBuilderState();
+}
+
+class _WeekBuilderState extends State<WeekBuilder> {
+
+	@override
+	Widget build(BuildContext context) {
+		
+		return Padding(
+				padding: EdgeInsets.only(left: 20, right:10),
+			child: Row(
+				mainAxisAlignment: MainAxisAlignment.spaceBetween,
+				children: <Widget>[
+					
+					Text(
+						'Sunday',
+						style: TextStyle(
+							color: Color.fromRGBO(205,205,211,10),
+							fontSize: 23
 						),
 					),
-
-					SizedBox(height: 20),
-
-					Text(
-						data?['temp'],
-						style: TextStyle( fontSize: 65),
-					),
-
-					SizedBox(height: 90),
-
 					Row(
-						mainAxisAlignment: MainAxisAlignment.spaceAround,
 						children: <Widget>[
-							Column(
-								crossAxisAlignment: CrossAxisAlignment.start,
-								children: <Widget>[
-									Text(
-										'Min: ${data?['tempMin']}',
-										style: TextStyle(
-											fontSize: 23
-										),
-									),
-
-									Text(
-										'Max: ${data?['tempMax']}',
-										style: TextStyle(
-											fontSize: 23
-										),
-									),
-								],
+							Text(
+								'25 C',
+								style: TextStyle(
+									color: Color.fromRGBO(205,205,211,10),
+									fontSize: 23
+								),
 							),
+							Image.network('https://openweathermap.org/img/wn/10d.png'),
 						],
 					),
 				],

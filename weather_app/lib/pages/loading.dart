@@ -9,7 +9,7 @@ class Loading extends StatefulWidget {
 class _LoadingState extends State<Loading> {
 
 	void setupWeatherApp() async {
-		CityWeather instance = CityWeather(city: 'Svalbard');
+		CityWeather instance = CityWeather(city: 'Svalbard', index: 0);
 		await instance.getWeather();
 		Navigator.pushNamed(context, '/home', arguments: {
 			'city'    : instance.city,
