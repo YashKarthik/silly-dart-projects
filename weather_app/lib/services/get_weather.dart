@@ -30,7 +30,7 @@ class CityWeather {
 			tempMin = (data['list'][index]['main']['temp_min'] - 273).toStringAsFixed(1);
 			tempMax = (data['list'][index]['main']['temp_max'] - 273).toStringAsFixed(1);
 
-			print('$city $weather $temp $tempMax $tempMin $imgUrl');
+			print('data fetched succesfully');
 
 		}
 

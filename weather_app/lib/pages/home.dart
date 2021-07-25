@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:weather_app/pages/choose_location.dart';
+import 'package:weather_app/services/get_weather.dart';
+
 
 class Home extends StatefulWidget {
 	@override
@@ -13,7 +16,6 @@ class _HomeState extends State<Home> {
 	Widget build(BuildContext context) {
 
 		data = data!.isNotEmpty ? data : ModalRoute.of(context)!.settings.arguments as Map;
-		print('data:\n $data');
 		
 		return Scaffold(
 			backgroundColor: Color.fromRGBO(0,2,46,1),
@@ -53,7 +55,18 @@ class _HomeState extends State<Home> {
 							Center(
 								child: TextButton(
 									onPressed: () async {
-										dynamic result = await Navigator.pushNamed(context, '/location');
+									  
+										dynamic result = await Navigator.of(context).push(_createRoute());
+
+										//dynamic result = await Navigator.pushNamed(
+										//	context,
+										//	'/location',
+
+										//	arguments:  {
+										//		'index': 0,
+										//	}
+										//);
+
 										setState(() {
 											data = {
 												'city'    : result['city'],
@@ -125,7 +138,7 @@ class _HomeState extends State<Home> {
 												Image.network(data?['imgUrl']),
 
 												Text(
-													'Min: ${data?['tempMin']}',
+													'Min: ${data?['tempMin']}°',
 													style: TextStyle(
 														fontSize: 20,
 														color: Color.fromRGBO(205,205,211,50),
@@ -135,7 +148,7 @@ class _HomeState extends State<Home> {
 												),
 
 												Text(
-													'Max: ${data?['tempMax']}',
+													'Max: ${data?['tempMax']}°',
 													style: TextStyle(
 														color: Color.fromRGBO(205,205,211,50),
 														fontSize: 20,
@@ -167,8 +180,23 @@ class WeekBuilder extends StatefulWidget {
 
 class _WeekBuilderState extends State<WeekBuilder> {
 
+	late String temp;
+	late String imgUrl;
+	late String date;
+	//data = data!.isNotEmpty ? data : ModalRoute.of(context)!.settings.arguments as Map;
+
+	void setupWeek() async {
+
+		CityWeather instance = CityWeather(city: 'Svalbard', index: 1);
+		await instance.getWeather();
+		temp    = instance.temp;
+		imgUrl  = instance.imgUrl;
+	}
+
 	@override
 	Widget build(BuildContext context) {
+
+		setupWeek();
 		
 		return Padding(
 				padding: EdgeInsets.only(left: 20, right:10),
@@ -186,17 +214,38 @@ class _WeekBuilderState extends State<WeekBuilder> {
 					Row(
 						children: <Widget>[
 							Text(
-								'25 C',
+								temp,
 								style: TextStyle(
 									color: Color.fromRGBO(205,205,211,10),
 									fontSize: 23
 								),
 							),
-							Image.network('https://openweathermap.org/img/wn/10d.png'),
+							Image.network(imgUrl),
 						],
 					),
 				],
 			),
 		);
 	}
+}
+
+Route _createRoute() {
+
+  return PageRouteBuilder(
+
+    pageBuilder: (context, animation, secondaryAnimation) => ChooseLocation(),
+    transitionsBuilder: (context, animation, secondaryAnimation, child) {
+
+      const begin = Offset(0.0, 1.0);
+      const end = Offset(0,0.0);
+      const curve = Curves.ease;
+
+      var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+
+      return SlideTransition(
+        position: animation.drive(tween),
+        child: child,
+      );
+    },
+  );
 }
