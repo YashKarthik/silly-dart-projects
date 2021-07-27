@@ -162,8 +162,35 @@ class _HomeState extends State<Home> {
 								),
 							),
 
-							SizedBox(height: 40),
-							WeekBuilder(),
+							SizedBox(height: 80),
+							WeekBuilder(
+								city: data?['city'],
+								index: 1,
+							),
+
+							SizedBox(height: 6),
+							WeekBuilder(
+								city: data?['city'],
+								index: 2,
+							),
+
+							SizedBox(height: 6),
+							WeekBuilder(
+								city: data?['city'],
+								index: 3,
+							),
+
+							SizedBox(height: 6),
+							WeekBuilder(
+								city: data?['city'],
+								index: 4,
+							),
+
+							SizedBox(height: 6),
+							WeekBuilder(
+								city: data?['city'],
+								index: 5,
+							),
 
 						],
 					),
@@ -174,8 +201,15 @@ class _HomeState extends State<Home> {
 }
 
 class WeekBuilder extends StatefulWidget {
+
+	late final VoidCallback onCityChanged;
+	late final String city;
+	late final int index;
+
+   WeekBuilder ({required this.city, required this.index});
+
 	@override
-	_WeekBuilderState createState() => _WeekBuilderState();
+	_WeekBuilderState createState() => _WeekBuilderState(city: city, index: index);
 }
 
 class _WeekBuilderState extends State<WeekBuilder> {
@@ -183,14 +217,19 @@ class _WeekBuilderState extends State<WeekBuilder> {
 	late String temp;
 	late String imgUrl;
 	late String date;
+	late String city;
+	late int index;
 	//data = data!.isNotEmpty ? data : ModalRoute.of(context)!.settings.arguments as Map;
+
+	_WeekBuilderState ({required this.city, required this.index});
 
 	void setupWeek() async {
 
-		CityWeather instance = CityWeather(city: 'Svalbard', index: 1);
+		CityWeather instance = CityWeather(city: city, index: index);
 		await instance.getWeather();
 		temp    = instance.temp;
 		imgUrl  = instance.imgUrl;
+
 	}
 
 	@override
@@ -214,7 +253,7 @@ class _WeekBuilderState extends State<WeekBuilder> {
 					Row(
 						children: <Widget>[
 							Text(
-								temp,
+								'$temp°',
 								style: TextStyle(
 									color: Color.fromRGBO(205,205,211,10),
 									fontSize: 23

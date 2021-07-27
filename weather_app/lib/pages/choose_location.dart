@@ -66,13 +66,8 @@ class _ChooseLocationState extends State<ChooseLocation> {
 									color: Color.fromRGBO(92,117,181,50),
 								),
 
-									child: Container(
-										height: 410,
-										width: 0,
-
-									alignment: Alignment.center,
 									child: Padding(
-										padding: EdgeInsets.all(10),
+										padding: EdgeInsets.all(14),
 										child: CupertinoTextField(
 											autocorrect : true,
 											autofocus   : true,
@@ -94,7 +89,6 @@ class _ChooseLocationState extends State<ChooseLocation> {
   										},
 										),
 									),
-								),
 							),
 						),
 					),
