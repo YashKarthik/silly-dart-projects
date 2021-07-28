@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:weather_app/pages/choose_location.dart';
 import 'package:weather_app/services/get_weather.dart';
@@ -21,7 +23,7 @@ class _HomeState extends State<Home> {
 			backgroundColor: Color.fromRGBO(0,2,46,1),
 			appBar: AppBar(
 
-				backgroundColor: Color.fromRGBO(92,117,181,50),
+				backgroundColor: Color.fromRGBO(92,117,181,40),
 				centerTitle: true,
 				toolbarHeight: 40,
 				elevation: 0,
@@ -46,153 +48,150 @@ class _HomeState extends State<Home> {
 							fit: BoxFit.cover,
 							)
 						),
-					child: Column(
+					child: BackdropFilter(
+						filter: ImageFilter.blur(
+							sigmaX: 15,
+							sigmaY: 3,
+						),
 
-						children: <Widget>[
+						child: Column(
+							children: <Widget>[
 
-							SizedBox(height: 30),
+								SizedBox(height: 30),
 
-							Center(
-								child: TextButton(
-									onPressed: () async {
-									  
-										dynamic result = await Navigator.of(context).push(_createRoute());
+								Center(
+									child: TextButton(
+										onPressed: () async {
+										  
+											dynamic result = await Navigator.of(context).push(_createRoute());
 
-										//dynamic result = await Navigator.pushNamed(
-										//	context,
-										//	'/location',
+											setState(() {
+												data = {
+													'city'    : result['city'],
+													'weather' : result['weather'],
+													'temp'    : result['temp'],
+													'tempMax' : result['tempMax'],
+													'tempMin' : result['tempMin'],
+													'imgUrl' : result['imgUrl'],
+												};
+											});
+										},
 
-										//	arguments:  {
-										//		'index': 0,
-										//	}
-										//);
-
-										setState(() {
-											data = {
-												'city'    : result['city'],
-												'weather' : result['weather'],
-												'temp'    : result['temp'],
-												'tempMax' : result['tempMax'],
-												'tempMin' : result['tempMin'],
-												'imgUrl' : result['imgUrl'],
-											};
-										});
-									},
-
-									child:Text(
-										data?['city'],
-										style: TextStyle(
-											fontSize: 40,
-											fontWeight: FontWeight.w500,
-											color: Color.fromRGBO(205,205,211,10)
+										child:Text(
+											data?['city'],
+											style: TextStyle(
+												fontSize: 40,
+												fontWeight: FontWeight.w500,
+												color: Color.fromRGBO(205,205,211,10)
+											),
 										),
 									),
 								),
-							),
 
-							SizedBox(height: 30),
+								SizedBox(height: 30),
 
-							Container(
-								height: 120,
-								child: Row(
-									mainAxisAlignment: MainAxisAlignment.center,
-									children: <Widget>[
+								Container(
+									height: 120,
+									child: Row(
+										mainAxisAlignment: MainAxisAlignment.center,
+										children: <Widget>[
 
-										Padding(
-											padding: EdgeInsets.symmetric(horizontal:10, vertical:00),
-											child: Row(
-												children: [
+											Padding(
+												padding: EdgeInsets.symmetric(horizontal:10, vertical:00),
+												child: Row(
+													children: [
+														Text(
+															data?['temp'],
+															style: TextStyle(
+																fontSize: 55,
+																color: Color.fromRGBO(205,205,211,50)
+															),
+														),
+
+														SizedBox(width: 10,),
+
+														Text(
+															'℃',
+															style: TextStyle(
+																fontSize: 30,
+																color: Color.fromRGBO(205,205,211,50)
+															),
+														)
+													],
+												),
+											),
+
+											VerticalDivider(
+												color: Colors.grey,
+												thickness: 1,
+												width: 20,
+												indent: 1,
+												endIndent: 10,
+											),
+
+											Column(
+												crossAxisAlignment: CrossAxisAlignment.start,
+												children: <Widget>[
+
+													Image.network(data?['imgUrl']),
+
 													Text(
-														data?['temp'],
+														'Min: ${data?['tempMin']}°',
 														style: TextStyle(
-															fontSize: 55,
-															color: Color.fromRGBO(205,205,211,50)
+															fontSize: 20,
+															color: Color.fromRGBO(205,205,211,50),
+															fontFamily: 'Verdana',
+															fontWeight: FontWeight.w100,
 														),
 													),
 
-													SizedBox(width: 10,),
-
 													Text(
-														'℃',
+														'Max: ${data?['tempMax']}°',
 														style: TextStyle(
-															fontSize: 30,
-															color: Color.fromRGBO(205,205,211,50)
+															color: Color.fromRGBO(205,205,211,50),
+															fontSize: 20,
+															fontFamily: 'Verdana',
+															fontWeight: FontWeight.w100,
 														),
-													)
+													),
 												],
 											),
-										),
-
-										VerticalDivider(
-											color: Colors.grey,
-											thickness: 1,
-											width: 20,
-											indent: 1,
-											endIndent: 10,
-										),
-
-										Column(
-											crossAxisAlignment: CrossAxisAlignment.start,
-											children: <Widget>[
-
-												Image.network(data?['imgUrl']),
-
-												Text(
-													'Min: ${data?['tempMin']}°',
-													style: TextStyle(
-														fontSize: 20,
-														color: Color.fromRGBO(205,205,211,50),
-														fontFamily: 'Verdana',
-														fontWeight: FontWeight.w100,
-													),
-												),
-
-												Text(
-													'Max: ${data?['tempMax']}°',
-													style: TextStyle(
-														color: Color.fromRGBO(205,205,211,50),
-														fontSize: 20,
-														fontFamily: 'Verdana',
-														fontWeight: FontWeight.w100,
-													),
-												),
-											],
-										),
-									],
+										],
+									),
 								),
-							),
 
-							SizedBox(height: 80),
-							WeekBuilder(
-								city: data?['city'],
-								index: 1,
-							),
+								SizedBox(height: 80),
+								WeekBuilder(
+									city: data?['city'],
+									index: 1,
+								),
 
-							SizedBox(height: 6),
-							WeekBuilder(
-								city: data?['city'],
-								index: 2,
-							),
+								SizedBox(height: 6),
+								WeekBuilder(
+									city: data?['city'],
+									index: 2,
+								),
 
-							SizedBox(height: 6),
-							WeekBuilder(
-								city: data?['city'],
-								index: 3,
-							),
+								SizedBox(height: 6),
+								WeekBuilder(
+									city: data?['city'],
+									index: 3,
+								),
 
-							SizedBox(height: 6),
-							WeekBuilder(
-								city: data?['city'],
-								index: 4,
-							),
+								SizedBox(height: 6),
+								WeekBuilder(
+									city: data?['city'],
+									index: 4,
+								),
 
-							SizedBox(height: 6),
-							WeekBuilder(
-								city: data?['city'],
-								index: 5,
-							),
+								SizedBox(height: 6),
+								WeekBuilder(
+									city: data?['city'],
+									index: 5,
+								),
 
-						],
+							],
+						),
 					),
 				),
 			),
@@ -218,10 +217,18 @@ class _WeekBuilderState extends State<WeekBuilder> {
 	late String imgUrl;
 	late String date;
 	late String city;
+	late String todayWeekday;
 	late int index;
 	//data = data!.isNotEmpty ? data : ModalRoute.of(context)!.settings.arguments as Map;
 
 	_WeekBuilderState ({required this.city, required this.index});
+
+	final Map <int, String> weekDays = {
+		1: 'Monday', 2: 'Tuesday',
+		3: 'Wednesday', 4: 'Thursday',
+		5: 'Friday', 6: 'Saturday',
+		7: 'Sunday',
+	};
 
 	void setupWeek() async {
 
@@ -229,6 +236,12 @@ class _WeekBuilderState extends State<WeekBuilder> {
 		await instance.getWeather();
 		temp    = instance.temp;
 		imgUrl  = instance.imgUrl;
+
+		todayWeekday = weekDays[
+			DateTime.now()
+							.add(Duration(days: index))
+							.weekday
+		]!;
 
 	}
 
@@ -244,9 +257,9 @@ class _WeekBuilderState extends State<WeekBuilder> {
 				children: <Widget>[
 					
 					Text(
-						'Sunday',
+						todayWeekday,
 						style: TextStyle(
-							color: Color.fromRGBO(205,205,211,10),
+							color: Color.fromRGBO(194, 194, 198, 40),
 							fontSize: 23
 						),
 					),
@@ -255,7 +268,7 @@ class _WeekBuilderState extends State<WeekBuilder> {
 							Text(
 								'$temp°',
 								style: TextStyle(
-									color: Color.fromRGBO(205,205,211,10),
+								color: Color.fromRGBO(194, 194, 198, 40),
 									fontSize: 23
 								),
 							),

@@ -50,7 +50,7 @@ class _ChooseLocationState extends State<ChooseLocation> {
 					),
 					child: BackdropFilter(
 						filter: ImageFilter.blur(
-							sigmaX: 20,
+							sigmaX: 30,
 							sigmaY: 5,
 						),
 						child: Center(
