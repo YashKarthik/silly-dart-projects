@@ -13,6 +13,7 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
 
 	late Map? data = {};
+	//late ValueNotifier<Map?> data = ValueNotifier<Map?>({});
 
 	@override
 	Widget build(BuildContext context) {
@@ -64,6 +65,12 @@ class _HomeState extends State<Home> {
 										onPressed: () async {
 										  
 											dynamic result = await Navigator.of(context).push(_createRoute());
+
+											//var ancestralState = context.findAncestorStateOfType<_WeekBuilderState>();
+											//print(ancestralState);
+											//ancestralState.setState(() {
+											//	data = {'city'    : result['city']};
+      								//});
 
 											setState(() {
 												data = {
@@ -160,6 +167,7 @@ class _HomeState extends State<Home> {
 									),
 								),
 
+
 								SizedBox(height: 80),
 								WeekBuilder(
 									city: data?['city'],
@@ -249,7 +257,7 @@ class _WeekBuilderState extends State<WeekBuilder> {
 	Widget build(BuildContext context) {
 
 		setupWeek();
-		
+
 		return Padding(
 				padding: EdgeInsets.only(left: 20, right:10),
 			child: Row(
