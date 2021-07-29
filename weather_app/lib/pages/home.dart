@@ -1,5 +1,4 @@
 import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:weather_app/pages/choose_location.dart';
 import 'package:weather_app/services/get_weather.dart';
@@ -13,7 +12,6 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
 
 	late Map? data = {};
-	//late ValueNotifier<Map?> data = ValueNotifier<Map?>({});
 
 	@override
 	Widget build(BuildContext context) {
@@ -65,6 +63,8 @@ class _HomeState extends State<Home> {
 										onPressed: () async {
 										  
 											dynamic result = await Navigator.of(context).push(_createRoute());
+											listState.setState(() {
+											});
 
 											//var ancestralState = context.findAncestorStateOfType<_WeekBuilderState>();
 											//print(ancestralState);
@@ -207,16 +207,20 @@ class _HomeState extends State<Home> {
 	}
 }
 
+late _WeekBuilderState listState;
+
 class WeekBuilder extends StatefulWidget {
 
-	late final VoidCallback onCityChanged;
 	late final String city;
 	late final int index;
 
    WeekBuilder ({required this.city, required this.index});
 
 	@override
-	_WeekBuilderState createState() => _WeekBuilderState(city: city, index: index);
+	_WeekBuilderState createState() {
+		listState = _WeekBuilderState(city: city, index: index);
+		return listState;
+	}
 }
 
 class _WeekBuilderState extends State<WeekBuilder> {
@@ -232,25 +236,25 @@ class _WeekBuilderState extends State<WeekBuilder> {
 	_WeekBuilderState ({required this.city, required this.index});
 
 	final Map <int, String> weekDays = {
-		1: 'Monday', 2: 'Tuesday',
+		1: 'Monday',    2: 'Tuesday',
 		3: 'Wednesday', 4: 'Thursday',
-		5: 'Friday', 6: 'Saturday',
+		5: 'Friday',    6: 'Saturday',
 		7: 'Sunday',
 	};
 
 	void setupWeek() async {
+		setState(() async {
+			CityWeather instance = CityWeather(city: city, index: index);
+			await instance.getWeather();
+			temp    = instance.temp;
+			imgUrl  = instance.imgUrl;
 
-		CityWeather instance = CityWeather(city: city, index: index);
-		await instance.getWeather();
-		temp    = instance.temp;
-		imgUrl  = instance.imgUrl;
-
-		todayWeekday = weekDays[
-			DateTime.now()
-							.add(Duration(days: index))
-							.weekday
-		]!;
-
+			todayWeekday = weekDays[
+				DateTime.now()
+								.add(Duration(days: index))
+								.weekday
+			]!;
+		});
 	}
 
 	@override
