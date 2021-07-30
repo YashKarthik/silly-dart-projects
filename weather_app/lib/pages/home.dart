@@ -63,8 +63,7 @@ class _HomeState extends State<Home> {
 										onPressed: () async {
 										  
 											dynamic result = await Navigator.of(context).push(_createRoute());
-											listState.setState(() {
-											});
+											listState.setupWeek();
 
 											//var ancestralState = context.findAncestorStateOfType<_WeekBuilderState>();
 											//print(ancestralState);
