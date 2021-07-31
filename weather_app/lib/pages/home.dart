@@ -63,14 +63,6 @@ class _HomeState extends State<Home> {
 										onPressed: () async {
 										  
 											dynamic result = await Navigator.of(context).push(_createRoute());
-											listState.setupWeek();
-
-											//var ancestralState = context.findAncestorStateOfType<_WeekBuilderState>();
-											//print(ancestralState);
-											//ancestralState.setState(() {
-											//	data = {'city'    : result['city']};
-      								//});
-
 											setState(() {
 												data = {
 													'city'    : result['city'],
@@ -80,6 +72,9 @@ class _HomeState extends State<Home> {
 													'tempMin' : result['tempMin'],
 													'imgUrl' : result['imgUrl'],
 												};
+											});
+											listState.setState(() {
+												listState.city = data?['city'];
 											});
 										},
 
@@ -166,7 +161,6 @@ class _HomeState extends State<Home> {
 									),
 								),
 
-
 								SizedBox(height: 80),
 								WeekBuilder(
 									city: data?['city'],
@@ -247,6 +241,8 @@ class _WeekBuilderState extends State<WeekBuilder> {
 			await instance.getWeather();
 			temp    = instance.temp;
 			imgUrl  = instance.imgUrl;
+
+			print('$index: $city');
 
 			todayWeekday = weekDays[
 				DateTime.now()
