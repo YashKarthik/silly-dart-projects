@@ -73,10 +73,10 @@ class _HomeState extends State<Home> {
 													'imgUrl' : result['imgUrl'],
 												};
 											});
-											listState.setState(() {
-												listState.city = data?['city'];
-											});
+
+											listState.rebuildAllChildren(context);
 										},
+
 
 										child:Text(
 											data?['city'],
@@ -190,7 +190,6 @@ class _HomeState extends State<Home> {
 									city: data?['city'],
 									index: 5,
 								),
-
 							],
 						),
 					),
@@ -224,7 +223,6 @@ class _WeekBuilderState extends State<WeekBuilder> {
 	late String city;
 	late String todayWeekday;
 	late int index;
-	//data = data!.isNotEmpty ? data : ModalRoute.of(context)!.settings.arguments as Map;
 
 	_WeekBuilderState ({required this.city, required this.index});
 
@@ -236,26 +234,36 @@ class _WeekBuilderState extends State<WeekBuilder> {
 	};
 
 	void setupWeek() async {
-		setState(() async {
-			CityWeather instance = CityWeather(city: city, index: index);
-			await instance.getWeather();
-			temp    = instance.temp;
-			imgUrl  = instance.imgUrl;
 
-			print('$index: $city');
+		CityWeather instance = CityWeather(city: city, index: index);
+		await instance.getWeather();
 
-			todayWeekday = weekDays[
-				DateTime.now()
-								.add(Duration(days: index))
-								.weekday
-			]!;
-		});
+		print('$index: $city');
+
+		todayWeekday = weekDays[
+			DateTime.now()
+							.add(Duration(days: index))
+							.weekday
+		]!;
+
+		temp    = instance.temp;
+		imgUrl  = instance.imgUrl;
 	}
+
+	void rebuildAllChildren(BuildContext context) {
+	  void rebuild(Element el) {
+	    el.markNeedsBuild();
+	    el.visitChildren(rebuild);
+	  }
+	  (context as Element).visitChildren(rebuild);
+	}
+
 
 	@override
 	Widget build(BuildContext context) {
 
 		setupWeek();
+		rebuildAllChildren(context);
 
 		return Padding(
 				padding: EdgeInsets.only(left: 20, right:10),
