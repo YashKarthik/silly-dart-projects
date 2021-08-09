@@ -73,8 +73,6 @@ class _HomeState extends State<Home> {
 													'imgUrl' : result['imgUrl'],
 												};
 											});
-
-											listState.rebuildAllChildren(context);
 										},
 
 
@@ -250,20 +248,10 @@ class _WeekBuilderState extends State<WeekBuilder> {
 		imgUrl  = instance.imgUrl;
 	}
 
-	void rebuildAllChildren(BuildContext context) {
-	  void rebuild(Element el) {
-	    el.markNeedsBuild();
-	    el.visitChildren(rebuild);
-	  }
-	  (context as Element).visitChildren(rebuild);
-	}
-
-
 	@override
 	Widget build(BuildContext context) {
 
 		setupWeek();
-		rebuildAllChildren(context);
 
 		return Padding(
 				padding: EdgeInsets.only(left: 20, right:10),
