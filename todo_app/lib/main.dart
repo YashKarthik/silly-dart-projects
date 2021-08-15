@@ -7,6 +7,5 @@ void main() {
 		home: Home(),
 		theme: ThemeData.dark(),
 		title: 'Reminders',
-
 	));//...runapp
 }

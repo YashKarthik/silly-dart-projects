@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:todo_app/src/listTiles.dart';
+import 'package:todo_app/src/reminder_create.dart';
+
+
 
 class Home extends StatelessWidget {
 	@override
@@ -61,7 +65,9 @@ class Home extends StatelessWidget {
 												flex: 0,
 												child: IconButton(
 													icon: Icon(Icons.edit),
-													onPressed: () {},
+													onPressed: () {
+														createReminders(context);
+													},
 													splashRadius: 20,
 													color: Colors.grey,
 												),
@@ -124,21 +130,21 @@ class Home extends StatelessWidget {
 
 						children: <Widget>[
 							
-							ListTile(
+							TodoListTile(
 								listCount: 11,
 								listName: 'All',
 								listIcon: Icons.archive,
 								colorHex: 0xffffffff,
 							),
 
-							ListTile(
+							TodoListTile(
 								listCount: 4,
 								listName: 'Home',
 								listIcon: Icons.home,
 								colorHex: 0xff2d88ef,
 							),
 
-							ListTile(
+							TodoListTile(
 								listCount: 7,
 								listName: 'Work',
 								listIcon: Icons.work,
@@ -163,71 +169,3 @@ class Home extends StatelessWidget {
 }
 
 
-class ListTile extends StatefulWidget {
-
-	late final String listName;
-	late final int listCount;
-	late final IconData listIcon;
-	late final int colorHex;
-
-	ListTile(
-	{
-		required this.listName,
-		required this.listCount,
-		required this.listIcon,
-		required this.colorHex,
-	});
-
-	@override
-	_ListTileState createState() => _ListTileState();
-}
-
-class _ListTileState extends State<ListTile> {
-
-	@override
-	Widget build(BuildContext context) {
-		
-		return Padding(
-			padding: EdgeInsets.all(7),
-			child: Card(
-				child: Row(
-					mainAxisAlignment: MainAxisAlignment.spaceBetween,
-
-					children: <Widget>[
-
-						Padding(
-							padding: EdgeInsets.fromLTRB(10, 7, 10, 7),
-							child: Column(
-								mainAxisAlignment: MainAxisAlignment.spaceBetween,
-								crossAxisAlignment: CrossAxisAlignment.start,
-								children: <Widget>[
-
-									Icon(
-										widget.listIcon,
-										color: Color(widget.colorHex),
-									),
-									Text(
-										'${widget.listName}',
-										style: TextStyle(
-											color: Colors.grey[400],
-										),
-									)
-								],
-							)
-						),
-
-						Column(
-							children: <Widget>[
-
-								Padding(
-									padding: EdgeInsets.all(13),
-									child: Text('${widget.listCount}'),
-								)
-							]
-						)
-					]
-				),
-			)
-		);
-	}
-}
