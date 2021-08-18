@@ -27,6 +27,7 @@ class _TodoListTileState extends State<TodoListTile> {
 		return Padding(
 			padding: EdgeInsets.all(7),
 			child: Card(
+				color: Colors.black12,
 				child: Row(
 					mainAxisAlignment: MainAxisAlignment.spaceBetween,
 

@@ -1,20 +1,17 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 
 createReminders(BuildContext context) {
 
-	OverlayState overlayState = Overlay.of(context)!;
-	OverlayEntry overlayEntry = OverlayEntry(
+	OverlayState _overlayState = Overlay.of(context)!;
+	OverlayEntry _overlayEntry = OverlayEntry(
 		
 		opaque: false,
 		builder: (context) => Center(
 			child: ReminderOverlay(),
 		)
 	);
-	overlayState.insert(overlayEntry);
+	_overlayState.insert(_overlayEntry);
 }
 
 class ReminderOverlay extends StatefulWidget {
@@ -39,7 +36,7 @@ class _ReminderOverlayState extends State<ReminderOverlay> {
 	Widget build(BuildContext context) {
 		
 		return Container(
-			height: 415,
+			height: 344,
 			width: 300,
 
 			child: Card(
@@ -50,21 +47,14 @@ class _ReminderOverlayState extends State<ReminderOverlay> {
 				child: Column(
 
 					crossAxisAlignment: CrossAxisAlignment.start,
-					mainAxisAlignment: MainAxisAlignment.center,
+					mainAxisAlignment: MainAxisAlignment.start,
 
 					children: <Widget>[
 
 						Container(
 
-							color: Colors.grey[900],
-
-							padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
-							margin: EdgeInsets.fromLTRB(5, 2, 5, 2),
-							height: 100,
-							width: 300,
-
 							child: TextField(
-								autofocus: true,
+								//autofocus: true,
 								decoration: InputDecoration(
   							  labelText: 'Reminder',
 									labelStyle: TextStyle(
@@ -73,18 +63,31 @@ class _ReminderOverlayState extends State<ReminderOverlay> {
   							),
 							),
 
+							padding: EdgeInsets.fromLTRB(10, 0, 10, 7),
+							margin: EdgeInsets.fromLTRB(3, 3, 3, 0),
+							height: 60,
+							width: 300,
+							decoration: ShapeDecoration(
+								color: Colors.grey[900],
+      				  shape: RoundedRectangleBorder(
+      				    side: BorderSide(
+										width: 1.0,
+										style: BorderStyle.solid,
+									),
+      				    borderRadius: BorderRadius.all(Radius.circular(5)),
+      				  ),
+      				),
 						),
 
 						Card(
 							color: Colors.grey[900],
-							child: Padding(
-								padding: EdgeInsets.fromLTRB(10, 1, 10, 1),
+							child: Container(
 								child: Column(
 									children: <Widget>[
 
 										Container(
 											padding: EdgeInsets.fromLTRB(10, 1, 10, 1),
-											margin: EdgeInsets.fromLTRB(5, 2, 5, 2),
+											margin: EdgeInsets.fromLTRB(5, 3, 5, 0),
 											child: Row(
 
 												mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -101,8 +104,8 @@ class _ReminderOverlayState extends State<ReminderOverlay> {
 													Container(
 
 														height: 35,
-														width: 104,
-														margin: EdgeInsets.symmetric(vertical: 4, horizontal: 0),
+														width: 109,
+														margin: EdgeInsets.symmetric(vertical: 3, horizontal: 0),
 
 														decoration: ShapeDecoration(
       											  shape: RoundedRectangleBorder(
@@ -144,8 +147,8 @@ class _ReminderOverlayState extends State<ReminderOverlay> {
 										),
 
 										Container(
-											padding: EdgeInsets.fromLTRB(10, 1, 10, 1),
-											margin: EdgeInsets.fromLTRB(5, 2, 5, 2),
+											padding: EdgeInsets.fromLTRB(10, 1, 10, 7),
+											margin: EdgeInsets.fromLTRB(5, 0, 5, 0),
 											child: Row(
 
 												mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -163,7 +166,6 @@ class _ReminderOverlayState extends State<ReminderOverlay> {
 
 														height: 35,
 														width: 104,
-														margin: EdgeInsets.symmetric(vertical: 4, horizontal: 0),
 
 														decoration: ShapeDecoration(
       											  shape: RoundedRectangleBorder(
@@ -176,23 +178,22 @@ class _ReminderOverlayState extends State<ReminderOverlay> {
       											  ),
       											),
 
-														child: TextButton(
-															onPressed: () {},
+														child: TextField(
 
-															child: Text(
-
-																'${formatTime(
-																		DateTime.now()
-																			.millisecondsSinceEpoch
-																		)
-																	}',
-
-																style: TextStyle(
-																	fontSize: 16,
-																),
-
+															keyboardType: TextInputType.numberWithOptions(
+																decimal: true,
+																signed: false,
 															),
-														)
+
+															decoration: InputDecoration(
+																hintText: 'Reminder',
+																labelStyle: TextStyle(
+																	color: Colors.blue,
+																	fontSize: 14,
+																)
+							  							),
+														),
+							
 													),
 												],
 											),
@@ -208,8 +209,8 @@ class _ReminderOverlayState extends State<ReminderOverlay> {
 						Card(
 							color: Colors.grey[900],
 							child: Container(
-								padding: EdgeInsets.fromLTRB(10, 1, 10, 1),
-								margin: EdgeInsets.fromLTRB(5, 2, 5, 2),
+								padding: EdgeInsets.symmetric(horizontal:10),
+								margin: EdgeInsets.symmetric(horizontal:5),
 								child: Row(
 
 									mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -243,8 +244,8 @@ class _ReminderOverlayState extends State<ReminderOverlay> {
 						Card(
 							color: Colors.grey[900],
 							child: Container(
-								padding: EdgeInsets.fromLTRB(10, 1, 10, 1),
-								margin: EdgeInsets.fromLTRB(5, 2, 5, 2),
+								padding: EdgeInsets.symmetric(horizontal:10),
+								margin: EdgeInsets.symmetric(horizontal:5),
 								child: Row(
 
 									mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -274,23 +275,24 @@ class _ReminderOverlayState extends State<ReminderOverlay> {
 							mainAxisAlignment: MainAxisAlignment.spaceBetween,
 							children: <Widget>[
 
-								TextButton(
-									onPressed: () {},
-									child: Text('Cancel'),
-									style: ButtonStyle(
-									),
+								Padding(
+									padding: EdgeInsets.only(left:10),
+									child: TextButton(
+										onPressed: () {
+										},
+										child: Text('CANCEL'),
+									)
 								),
 
-								TextButton(
-									onPressed: () {},
-									child: Text('Done'),
-									style: ButtonStyle(
-									),
+								Padding(
+									padding: EdgeInsets.only(right:10),
+									child: TextButton(
+										onPressed: () {},
+										child: Text('DONE'),
+									)
 								),
 							],
 						)
-
-
 					],
 				) ,
 			),

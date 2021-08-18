@@ -9,10 +9,13 @@ class Home extends StatelessWidget {
 	Widget build(BuildContext context) {
 		return Scaffold(
 
+			backgroundColor: Colors.grey[900],
+
 			appBar: AppBar(
 				centerTitle: true,
 				toolbarHeight: 40,
 				title: Text('Reminders'),
+				backgroundColor: Colors.black26,
 			),
 
 			body: Column(
@@ -35,6 +38,7 @@ class Home extends StatelessWidget {
 					Padding(
 						padding: EdgeInsets.only(left: 10, right: 10),
 						child: Card(
+							color: Colors.black12,
 							child: Column(
 							crossAxisAlignment: CrossAxisAlignment.start,
 
