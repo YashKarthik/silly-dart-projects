@@ -8,7 +8,7 @@ class CounterBloc {
 	StreamSink <int> get _inCounter => _countStateController.sink;
 	Stream <int> get counter => _countStateController.stream; // exspose only the final output state to the UI
 
-	late final _countEventController = StreamController<CounterEvent>();
+	late final _countEventController = StreamController<CounterEvent>(); // stream to take the event from UI
 	StreamSink <CounterEvent> get counterEventSink => _countEventController.sink; // exspose the event handler stream to UI
 
 	CounterBloc()

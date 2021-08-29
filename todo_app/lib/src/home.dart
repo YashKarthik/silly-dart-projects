@@ -1,12 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:todo_app/src/listTiles.dart';
-import 'package:todo_app/src/reminder_create.dart';
+import 'package:todo_app/src/blocs/checkbox_bloc.dart';
 
+class Home extends StatefulWidget {
+	@override
+	_HomeState createState() => _HomeState();
+}
 
+class _HomeState extends State<Home> {
 
-class Home extends StatelessWidget {
+	final _bloc = CheckBox();
+
 	@override
 	Widget build(BuildContext context) {
+		
 		return Scaffold(
 
 			backgroundColor: Colors.grey[900],
@@ -18,147 +24,33 @@ class Home extends StatelessWidget {
 				backgroundColor: Colors.black26,
 			),
 
-			body: Column(
-				crossAxisAlignment: CrossAxisAlignment.start,
-				children: <Widget> [
+			body: Container(
+				child: StreamBuilder(
+					stream: _bloc.checkBoxState,
+					initialData: false,
+					builder: (BuildContext context, AsyncSnapshot <bool> snapshot){
 
-					SizedBox(height: 10),
+						return ListTile(
 
-					Padding(
-						padding: EdgeInsets.only(left:10, top:10, bottom:10),
-						child: Text(
-							'Upcoming',
-							style: TextStyle(
-								fontSize: 22,
-								fontWeight: FontWeight.w600,
-							),
-						),
-					),
+							tileColor: Colors.black12,
 
-					Padding(
-						padding: EdgeInsets.only(left: 10, right: 10),
-						child: Card(
-							color: Colors.black12,
-							child: Column(
-							crossAxisAlignment: CrossAxisAlignment.start,
-
-								children: <Widget>[
-
-									Row(
-										children: <Widget>[
-
-											Expanded(
-												flex: 0,
-												child: Checkbox(
-													onChanged: null,
-													value: false,
-												)
-											),
-
-											Expanded(
-												flex: 1,
-												child:Text(
-													'Reminder',
-													style: TextStyle(
-														fontSize: 17,
-													),
-												) 
-											),
-
-											Expanded(
-												flex: 0,
-												child: IconButton(
-													icon: Icon(Icons.edit),
-													onPressed: () {
-														createReminders(context);
-													},
-													splashRadius: 20,
-													color: Colors.grey,
-												),
-											),
-
-
-										],
-									),
-									
-									Padding(
-										padding: EdgeInsets.fromLTRB(50, 0, 0, 10),
-										child: Text(
-											'12 Jul at 9 AM',
-											style: TextStyle(
-												color: Colors.blue[500]
-											)
-										),
-									),
-
-
-								],
-							),
-						)
-					),
-
-					Padding(
-						padding: EdgeInsets.only(left:10, top:30),
-						child: Row(
-							mainAxisAlignment: MainAxisAlignment.spaceBetween,
-							crossAxisAlignment: CrossAxisAlignment.baseline,
-							textBaseline: TextBaseline.ideographic,
-							children: <Widget>[
-
-								Text(
-									'Lists',
-									style: TextStyle(
-										fontSize: 22,
-										fontWeight: FontWeight.w600,
-									),
-								),
-
-								TextButton(
-									onPressed: null,
-									child: Text(
-										'Edit',
-
-									)
-								),
-							],
-						),
-					),
-
-					GridView(
-
-						shrinkWrap: true,
-						gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-							crossAxisCount: 3,
-							childAspectRatio: 1.3,
-						),
-
-						children: <Widget>[
-							
-							TodoListTile(
-								listCount: 11,
-								listName: 'All',
-								listIcon: Icons.archive,
-								colorHex: 0xffffffff,
+							leading: Checkbox(
+								onChanged: (bool? currentValue) {
+									_bloc.checkBoxEvent.add(currentValue);
+								},
+								value: snapshot.data,
+								activeColor: Colors.grey[800],
 							),
 
-							TodoListTile(
-								listCount: 4,
-								listName: 'Home',
-								listIcon: Icons.home,
-								colorHex: 0xff2d88ef,
+							title: Text('Reminders'),
+							trailing: IconButton(
+								icon: Icon(Icons.edit),
+								onPressed: null,
 							),
-
-							TodoListTile(
-								listCount: 7,
-								listName: 'Work',
-								listIcon: Icons.work,
-								colorHex: 0xffef442d,
-							),
-
-						],
-					),
-
-				],
+						);
+					},
+				),
+				margin: EdgeInsets.all(5),
 			),
 
 			floatingActionButton: FloatingActionButton(
@@ -166,10 +58,8 @@ class Home extends StatelessWidget {
 				child: Icon(Icons.add),
 				backgroundColor: Colors.black54,
 				foregroundColor: Colors.grey[200],
-			),	
 
+			),	
 		);
 	}
 }
-
-
